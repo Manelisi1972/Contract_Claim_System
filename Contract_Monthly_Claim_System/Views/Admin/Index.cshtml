@@ -1,0 +1,40 @@
+﻿@model IEnumerable< Contract_Monthly_Claim_System.Models.Claim>
+    
+@{
+    ViewData["Title"] = "Pending Claims (Coordinators)";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table">
+    <thead><tr><th>Lecturer</th><th>Period</th><th>Amount</th><th>Attachments</th><th>Actions</th></tr></thead>
+    <tbody>
+        @foreach (var c in Model)
+        {
+            <tr>
+                <td>@c.LecturerName</td>
+                <td>@c.ClaimPeriod.ToString("yyyy-MM")</td>
+                <td>@string.Format("{0:C}", c.Amount)</td>
+                <td>@(c.Attachments?.Count() ?? 0)</td>
+                <td>
+                    <a class="btn btn-sm btn-info" asp-controller="Claims" asp-action="Details" asp-route-id="@c.ClaimId">View</a>
+
+                    <form asp-action="Approve" method="post" style="display:inline">
+                        <input type="hidden" name="id" value="@c.ClaimId" />
+                        <button class="btn btn-sm btn-success" type="submit">Approve</button>
+                    </form>
+
+                    <button class="btn btn-sm btn-danger" data-bs-toggle="collapse" data-bs-target="#reject-@c.ClaimId">Reject</button>
+                    <div id="reject-@c.ClaimId" class="collapse mt-2">
+                        <form asp-action="Reject" method="post">
+                            <input type="hidden" name="id" value="@c.ClaimId" />
+                            <input name="reason" class="form-control mb-1" placeholder="Reason for rejection" />
+                            <button class="btn btn-sm btn-danger" type="submit">Submit Reject</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

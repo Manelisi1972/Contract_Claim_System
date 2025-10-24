@@ -69,10 +69,34 @@ namespace Contract_Monthly_Claim_System.services
             throw new NotImplementedException();
         }
 
+        public Task ApproveAsync(int id, string v)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string?> GetAllForLecturerAsync(string lecturer)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<Attachment>> GetAttachmentsByClaimIdAsync(int claimId)
         {
             return await _context.Attachments.Where(a => a.ClaimId == claimId).ToListAsync();
         }
 
+        public Task<string?> GetByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string?> GetPendingAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RejectAsync(int id, string v, string reason)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
