@@ -64,9 +64,11 @@ namespace Contract_Monthly_Claim_System.services
             return attachment;
         }
 
-        public Task<Claim> AddClaimAsync(Claim claim)
+        public async Task<Claim> AddClaimAsync(Claim claim)
         {
-            throw new NotImplementedException();
+            _context.Claims.Add(claim);
+            await _context.SaveChangesAsync();
+            return claim;
         }
 
         public Task ApproveAsync(int id, string v)
@@ -98,5 +100,7 @@ namespace Contract_Monthly_Claim_System.services
         {
             throw new NotImplementedException();
         }
+
+        
     }
 }
