@@ -1,0 +1,52 @@
+﻿@model Contract_Monthly_Claim_System.Models.Claim
+
+<h2>Submit Monthly Claim</h2>
+
+<form asp-action="SubmitClaim" method="post">
+    <div class="form-group">
+        <label>Hours Worked</label>
+        <input type="number" id="hoursWorked" name="HoursWorked" class="form-control" min="1" required />
+    </div>
+
+    <div class="form-group mt-2">
+        <label>Hourly Rate (R)</label>
+        <input type="number" id="hourlyRate" name="HourlyRate" class="form-control" min="1" required />
+    </div>
+
+    <div class="form-group mt-3">
+        <label><strong>Total Payment (Auto-calculated)</strong></label>
+        <input type="text" id="totalAmount" readonly class="form-control bg-light" style="font-weight:bold;" />
+    </div>
+
+    <div class="form-group mt-3">
+        <label>Additional Notes</label>
+        <textarea name="Notes" class="form-control"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Submit Claim</button>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+
+    // AUTO-CALCULATION SCRIPT
+
+    $(document).ready(function() {
+        function calculateTotal() {
+        let hours = parseFloat($("#hoursWorked").val());
+        let rate = parseFloat($("#hourlyRate").val());
+
+        if (!isNaN(hours) && !isNaN(rate) && hours > 0 && rate > 0) {
+            $("#totalAmount").val("R " + (hours * rate).toFixed(2));
+        } else {
+            $("#totalAmount").val("");
+        }
+    }
+
+        $("#hoursWorked, #hourlyRate").on("input", function () {
+            calculateTotal();
+        });
+    });
+</script>
+
