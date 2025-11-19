@@ -60,6 +60,39 @@ namespace Contract_Monthly_Claim_System.Controllers
             return RedirectToAction("Details", new { id = claimId });
         }
 
-        
+        [HttpGet]
+        public IActionResult SubmitClaim()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SubmitClaim(ClaimViewmodel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["Error"] = "Please correct the errors and try again.";
+                return View(model);
+            }
+
+            decimal total = model.HoursWorked * model.HourlyRate;
+
+            var claim = new Claim
+            {
+                ClaimPeriodStart = DateTime.Now.AddDays(-30),
+                ClaimPeriodEnd = DateTime.Now,
+                SubmittedDate = DateTime.Now,
+                TotalAmount = total,
+                SubmittedBy = User.Identity?.Name ?? "Lecturer",
+                Status = ClaimStatus.Pending ,
+                Remarks = model.Notes
+            };
+
+            await _claimService.AddClaimAsync(claim);
+
+            TempData["Success"] = "Your claim has been submitted successfully!";
+            return RedirectToAction("MyClaims");
+        }
+
     }
 }

@@ -38,5 +38,13 @@ namespace Contract_Monthly_Claim_System.Models
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public ICollection<Attachment> Attachments { get; set; } = new List<Attachment>();
+        public DateTime ClaimPeriodStart { get; internal set; }
+        public DateTime ClaimPeriodEnd { get; internal set; }
+        public DateTime SubmittedDate { get; internal set; }
+        public decimal TotalAmount { get; internal set; }
+        public string SubmittedBy { get; internal set; }
+        public object Remarks { get; internal set; }
+
+       
     }
 }
