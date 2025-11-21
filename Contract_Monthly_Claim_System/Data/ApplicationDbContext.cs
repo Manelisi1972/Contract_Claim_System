@@ -10,6 +10,7 @@ namespace Contract_Monthly_Claim_System.Data
 
         public DbSet<Claim> Claims { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
+        public int Lecterers { get; internal set; }
 
         protected override void OnModelCreating(ModelBuilder mb)
         {
