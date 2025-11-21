@@ -44,7 +44,8 @@ namespace Contract_Monthly_Claim_System.Models
         public decimal TotalAmount { get; internal set; }
         public string SubmittedBy { get; internal set; }
         public object Remarks { get; internal set; }
-
-       
+        public string ApprovedBy { get; internal set; }
+        public DateTime ApprovedDate { get; internal set; }
+        public string RejectionReason { get; internal set; }
     }
 }
