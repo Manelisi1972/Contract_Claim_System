@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Contract_Monthly_Claim_System.Models.Claim>
+
+<h2>Pending Claims for Verification</h2>
+
+<table class="table table-bordered table-striped mt-3">
+    <thead class="table-dark">
+        <tr>
+            <th>Lecturer</th>
+            <th>Hours</th>
+            <th>Hourly Rate</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Attachments</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+@foreach (var claim in Model)
+{
+            <tr>
+                <td>@claim.SubmittedBy</td>
+                <td>@claim.HoursWorked</td>
+                <td>@claim.HourlyRate</td>
+                <td>R @claim.TotalAmount</td>
+                <td><span class="badge bg-warning">Pending</span></td>
+                <td>
+                    <a asp-action="Attachments" asp-route-id="@claim.ClaimId" class="btn btn-sm btn-outline-info">View</a>
+                </td>
+                <td>
+                    <button class="btn btn-success btn-sm approve-btn" data-id="@claim.ClaimId">Approve</button>
+                    <button class="btn btn-danger btn-sm reject-btn" data-id="@claim.ClaimId">Reject</button>
+                </td>
+            </tr>
+}
+    </tbody>
+</table>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    
+    $(".approve-btn").click(function () {
+        var id = $(this).data("id");
+
+        $.post("/api/claims/" + id + "/approve", function () {
+            location.reload();
+        });
+    });
+
+    
+    $(".reject-btn").click(function () {
+        var id = $(this).data("id");
+        var reason = prompt("Enter reason for rejection:");
+
+        $.ajax({
+            url: "/api/claims/" + id + "/reject",
+            type: "POST",
+            data: JSON.stringify(reason),
+            contentType: "application/json",
+            success: function () {
+                location.reload();
+            }
+        });
+    });
+</script>
+
