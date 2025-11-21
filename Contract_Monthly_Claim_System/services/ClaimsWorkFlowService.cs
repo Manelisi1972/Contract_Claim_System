@@ -49,5 +49,15 @@ namespace Contract_Monthly_Claim_System.services
             await _context.SaveChangesAsync();
             return true;
         }
+
+        internal Task<bool> ApproveClaimAsync(int id, string? name)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal Task<bool> RejectClaimAsync(int id, string? name, string reason)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
